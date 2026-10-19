@@ -17,8 +17,7 @@ body{font-family:'Space Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monos
 @keyframes hue{to{--h:360}}
 
 /* background */
-.bg{position:fixed;inset:-2%;background:url(bg.jpg) center/cover no-repeat;background-image:image-set(url(bg.webp) type("image/webp"),url(bg.jpg) type("image/jpeg"));filter:brightness(.85) saturate(1.1);animation:drift 40s ease-in-out infinite alternate;z-index:0}
-@keyframes drift{to{transform:scale(1.03) translate(-.5%,.5%)}}
+.bg{position:fixed;inset:0;background:url(bg.jpg) center/cover no-repeat;background-image:image-set(url(bg.webp) type("image/webp"),url(bg.jpg) type("image/jpeg"));filter:brightness(.85) saturate(1.1);z-index:0}
 .aurora{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:.55;
  background:radial-gradient(40% 35% at 0% 0%,hsl(calc(var(--h)*1deg) 100% 60%/.7),transparent 70%),
  radial-gradient(40% 35% at 100% 0%,hsl(calc(var(--h)*1deg + 90deg) 100% 60%/.7),transparent 70%),
@@ -56,6 +55,27 @@ h1 span:first-child{font-size:.62em;letter-spacing:.18em}
 .discord:hover,.discord:focus-visible{transform:translateY(-2px) scale(1.04);outline:none}
 .discord svg{width:1.4em;height:1.4em;fill:currentColor}
 
+/* heart */
+.heart{position:fixed;left:0;top:0;z-index:20;pointer-events:none;width:60px;height:60px;transform:translate(-50%,-50%);will-change:left,top}
+.heart svg{width:100%;height:100%;display:block;overflow:visible;animation:beat 1.2s ease-in-out infinite}
+.heart path{fill:#ff2a2a;animation:hfill 8s linear infinite;filter:drop-shadow(0 0 4px currentColor) drop-shadow(0 0 12px currentColor);color:#ff2a2a}
+@keyframes hfill{0%{fill:#ff2a2a;color:#ff2a2a}9%{fill:#ff8a1f;color:#ff8a1f}18%{fill:#ffe81f;color:#ffe81f}27%{fill:#9dff1f;color:#9dff1f}36%{fill:#1fff5a;color:#1fff5a}45%{fill:#1ffff0;color:#1ffff0}54%{fill:#1fb4ff;color:#1fb4ff}63%{fill:#2a5bff;color:#2a5bff}72%{fill:#8a2aff;color:#8a2aff}81%{fill:#ff1fe8;color:#ff1fe8}90%{fill:#ff1f8a;color:#ff1f8a}100%{fill:#ff2a2a;color:#ff2a2a}}
+@keyframes beat{0%,40%,100%{transform:scale(1)}15%{transform:scale(1.18)}28%{transform:scale(1.05)}}
+/* toggle */
+main,.vignette{transition:opacity .6s ease}
+body.textoff main{opacity:0;pointer-events:none}
+body.textoff .vignette{opacity:0}
+.toggle{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:30;display:inline-flex;align-items:center;gap:.5em;padding:.6em 1.15em;border:0;border-radius:999px;cursor:pointer;color:#fff;font:700 .72rem/1 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:rgba(8,6,16,.78);isolation:isolate;transition:transform .2s;
+ box-shadow:0 0 16px hsl(calc(var(--h)*1deg) 100% 62%/.8),0 0 40px hsl(calc(var(--h)*1deg + 120deg) 100% 62%/.45)}
+.toggle::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;z-index:-1;
+ background:conic-gradient(from calc(var(--h)*3deg),#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.toggle:hover{transform:translateY(-2px) scale(1.04)}
+.toggle:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.toggle svg{width:1.4em;height:1.4em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.toggle .slash{display:none}.toggle[aria-pressed="true"] .slash{display:inline}
+@media (max-width:600px){.toggle{padding:.55em .95em;font-size:.66rem}}
+
 /* torn intro */
 .tear{position:fixed;left:0;right:0;height:56vh;z-index:10;pointer-events:none;animation:1.4s cubic-bezier(.7,0,.2,1) .5s forwards}
 .tear svg{width:100%;height:100%;display:block}
@@ -72,6 +92,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
  main>*{opacity:1}.tear{display:none}
  body{--h:280}
  h1 span{background-position:50% 0}
+ .heart path{fill:#ff1fe8;color:#ff1fe8}
 }
 </style>
 </head>
@@ -88,7 +109,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 <path fill="#0b0b0d" d="M0 560H1000V58L958 78 918 50 875 80 832 52 790 76 745 55 700 84 655 56 610 80 565 50 518 82 475 54 428 78 385 50 338 82 292 56 248 84 202 52 158 76 110 50 68 80 28 58 0 76Z"/>
 </svg></div>
 
-<main>
+<main id="content">
  <h1><span>We Are</span><span>Syndicate</span></h1>
  <div class="copy">
   <p class="lead">This is <b class="k" style="--o:0">SYNDICATE</b>. We are <b class="k" style="--o:33">FAMILY</b>.</p>
@@ -104,5 +125,19 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
   Join the Discord
  </a>
 </main>
+<div class="heart" id="heart" aria-hidden="true"><svg viewBox="0 0 32 29"><path d="M16 28.5 13.7 26.4C5.6 19 .3 14.2.3 8.3.3 3.5 4 0 8.7 0c2.7 0 5.3 1.3 7.3 3.3C18 1.3 20.6 0 23.3 0 28 0 31.7 3.5 31.7 8.3c0 5.9-5.3 10.7-13.4 18.1L16 28.5Z"/></svg></div>
+<button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="content"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3 3l18 18"/></svg><span>Hide text</span></button>
+<script>
+(function(){
+ var IW=1792,IH=1008,PX=913/1792,PY=275/1008,HS=0.032; // gap between palms (measured), heart = 3.2% of image width
+ var h=document.getElementById('heart');
+ function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s,ox=(W-dw)/2,oy=(H-dh)/2,z=Math.max(14,dw*HS);
+  h.style.left=(ox+dw*PX)+'px';h.style.top=(oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';}
+ addEventListener('resize',place);place();
+ var b=document.getElementById('toggle'),l=b.querySelector('span');
+ b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);});
+ if(location.hash=='#hidetext')b.click();
+})();
+</script>
 </body>
 </html>
