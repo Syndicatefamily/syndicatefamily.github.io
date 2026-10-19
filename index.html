@@ -68,11 +68,28 @@ h1 span:first-child{font-size:.62em;letter-spacing:.18em}
 .discord svg{width:1.4em;height:1.4em;fill:currentColor}
 
 /* heart */
-.heart{opacity:0;transition:opacity .8s ease;position:fixed;left:0;top:0;z-index:20;pointer-events:none;width:60px;height:60px;transform:translate(-50%,-50%);will-change:left,top}
+.heart{opacity:0;transition:opacity .8s ease;position:absolute;left:0;top:0;z-index:20;pointer-events:none;width:60px;height:60px;transform:translate(-50%,-50%);will-change:left,top}
 .heart svg{width:100%;height:100%;display:block;overflow:visible;animation:beat 1.2s ease-in-out infinite}
 .heart path{fill:#ff2a2a;animation:hfill 8s linear infinite;filter:drop-shadow(0 0 4px currentColor) drop-shadow(0 0 12px currentColor);color:#ff2a2a}
 @keyframes hfill{0%{fill:#ff2a2a;color:#ff2a2a}9%{fill:#ff8a1f;color:#ff8a1f}18%{fill:#ffe81f;color:#ffe81f}27%{fill:#9dff1f;color:#9dff1f}36%{fill:#1fff5a;color:#1fff5a}45%{fill:#1ffff0;color:#1ffff0}54%{fill:#1fb4ff;color:#1fb4ff}63%{fill:#2a5bff;color:#2a5bff}72%{fill:#8a2aff;color:#8a2aff}81%{fill:#ff1fe8;color:#ff1fe8}90%{fill:#ff1f8a;color:#ff1f8a}100%{fill:#ff2a2a;color:#ff2a2a}}
 @keyframes beat{0%,40%,100%{transform:scale(1)}15%{transform:scale(1.18)}28%{transform:scale(1.05)}}
+
+/* animated hidden scene (scene-anim-v1) */
+.scene{position:fixed;inset:0;z-index:2;opacity:0;transition:opacity 1s ease;pointer-events:none;overflow:hidden}
+body.textoff .scene{opacity:1}
+.cam{position:absolute;inset:0;transform-origin:50% 30%;will-change:transform}
+.scene .bg-hands{position:absolute;opacity:1}
+.glow{position:absolute;border-radius:50%;mix-blend-mode:screen;transform:translate(-50%,-50%);pointer-events:none;animation:flick 2.6s ease-in-out infinite}
+.g-blue{background:radial-gradient(closest-side,rgba(60,140,255,.55),rgba(40,90,255,.22) 55%,transparent)}
+.g-org{background:radial-gradient(closest-side,rgba(255,140,40,.55),rgba(255,80,20,.22) 55%,transparent);animation-delay:-1.3s;animation-duration:2.2s}
+@keyframes flick{0%,100%{opacity:.55}20%{opacity:.85}35%{opacity:.6}55%{opacity:1}75%{opacity:.7}}
+#fx{position:absolute;inset:0;width:100%;height:100%}
+.heart .hb{display:block;width:100%;height:100%}
+body.textoff .heart .hb{animation:bloomin 1.1s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes bloomin{0%{transform:scale(0);filter:brightness(3)}60%{filter:brightness(1.6)}100%{transform:scale(1);filter:none}}
+.heart .ring{position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:50%;border:2px solid #fff;transform:translate(-50%,-50%) scale(.6);opacity:0;color:#ff2a2a;box-shadow:0 0 14px currentColor,inset 0 0 10px currentColor;animation:ring 4.8s ease-out infinite,hfill 8s linear infinite}
+@keyframes ring{0%,62%{transform:translate(-50%,-50%) scale(.6);opacity:0}64%{opacity:.85}100%{transform:translate(-50%,-50%) scale(3.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cam{transform:none!important}#fx{display:none}.glow{opacity:.6}.heart .ring{display:none}}
 /* toggle */
 main,.vignette{transition:opacity .6s ease}
 body.textoff main{opacity:0;pointer-events:none}
@@ -111,7 +128,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 </style>
 </head>
 <body>
-<div class="bg bg-crest" aria-hidden="true"></div><div class="bg bg-hands" aria-hidden="true"></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-anim-v1"><div class="cam" id="cam"><div class="bg bg-hands"></div><div class="glow g-blue" id="gB"></div><div class="glow g-org" id="gO"></div><canvas id="fx"></canvas><div class="heart" id="heart" aria-hidden="true"><span class="hb"><svg viewBox="0 0 32 29"><path d="M16 28.5 13.7 26.4C5.6 19 .3 14.2.3 8.3.3 3.5 4 0 8.7 0c2.7 0 5.3 1.3 7.3 3.3C18 1.3 20.6 0 23.3 0 28 0 31.7 3.5 31.7 8.3c0 5.9-5.3 10.7-13.4 18.1L16 28.5Z"/></svg></span><i class="ring"></i></div></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
 <div class="leds" id="leds" aria-hidden="true" data-v="led-lotus-v1"></div>
 
 <div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
@@ -139,17 +156,52 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
   Join the Discord
  </a>
 </main>
-<div class="heart" id="heart" aria-hidden="true"><svg viewBox="0 0 32 29"><path d="M16 28.5 13.7 26.4C5.6 19 .3 14.2.3 8.3.3 3.5 4 0 8.7 0c2.7 0 5.3 1.3 7.3 3.3C18 1.3 20.6 0 23.3 0 28 0 31.7 3.5 31.7 8.3c0 5.9-5.3 10.7-13.4 18.1L16 28.5Z"/></svg></div>
+
 <button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="content"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3 3l18 18"/></svg><span>Hide text</span></button>
 <script>
 (function(){
- var IW=1792,IH=1008,PX=914/1792,PY=275/1008,HS=0.08; // gap between palms (measured), heart = 8% of image width (2.5x)
- var h=document.getElementById('heart');
- function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s,ox=(W-dw)/2,oy=(H-dh)/2,z=Math.max(35,dw*HS);
-  h.style.left=(ox+dw*PX)+'px';h.style.top=(oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';}
+ var IW=1792,IH=1008,PX=914/1792,PY=275/1008,HS=0.08; // palms anchor (measured); heart = 8% of image width
+ // tail glow anchors measured with PIL (fractions of image): blue tail left, orange tail right
+ var TB={x:.085,y:.53,r:.17},TO={x:.915,y:.6,r:.15};
+ var h=document.getElementById('heart'),gB=document.getElementById('gB'),gO=document.getElementById('gO'),cam=document.getElementById('cam'),cv=document.getElementById('fx'),cx=cv.getContext('2d');
+ var G={ox:0,oy:0,dw:0,dh:0,W:0,H:0};
+ function at(el,f,r){el.style.left=(G.ox+G.dw*f.x)+'px';el.style.top=(G.oy+G.dh*f.y)+'px';el.style.width=el.style.height=(G.dw*r)+'px';}
+ function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s;
+  G={ox:(W-dw)/2,oy:(H-dh)/2,dw:dw,dh:dh,W:W,H:H};var z=Math.max(35,dw*HS);
+  h.style.left=(G.ox+dw*PX)+'px';h.style.top=(G.oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';
+  at(gB,TB,TB.r*2);at(gO,TO,TO.r*2);
+  var d=Math.min(devicePixelRatio||1,2);cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);}
+ // scene-anim-v1: camera + particles. The camera transform is on .cam, which contains the image, glows, canvas and heart, so all stay locked together.
+ var RM=matchMedia('(prefers-reduced-motion: reduce)'),mx=0,my=0,tx=0,ty=0,P=[],run=false,t0=0,last=0;
+ addEventListener('pointermove',function(e){tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;});
+ addEventListener('deviceorientation',function(e){if(e.gamma==null)return;tx=Math.max(-1,Math.min(1,e.gamma/30));ty=Math.max(-1,Math.min(1,(e.beta-45)/30));});
+ function spawn(){var r=Math.random(),k,p={};
+  if(r<.38){k=TB;p.c=[90+Math.random()*80|0,170+Math.random()*60|0,255];p.vx=(Math.random()-.3)*.3;}
+  else if(r<.76){k=TO;p.c=[255,120+Math.random()*90|0,30];p.vx=(Math.random()-.7)*.3;}
+  else{k=null;p.hue=Math.random()*360;}
+  if(k){p.x=G.ox+G.dw*(k.x+(Math.random()-.5)*k.r*1.4);p.y=G.oy+G.dh*(k.y+(Math.random()-.2)*k.r*2.2);p.vy=-(.25+Math.random()*.6);p.s=.8+Math.random()*1.8;}
+  else{p.x=G.ox+G.dw*(PX+(Math.random()-.5)*.06);p.y=G.oy+G.dh*(PY+(Math.random()-.3)*.05);p.vx=(Math.random()-.5)*.35;p.vy=-(.2+Math.random()*.45);p.s=.8+Math.random()*1.6;}
+  p.l=0;p.L=140+Math.random()*200;p.w=Math.random()*6.28;return p;}
+ var MAX=innerWidth<700?55:110;
+ function frame(now){if(!run)return;var dt=Math.min(3,(now-last)/16.7)||1;last=now;var t=(now-t0)/1000;
+  mx+=(tx-mx)*.04;my+=(ty-my)*.04;
+  var kb=(t%40)/40,e=.5-.5*Math.cos(kb*6.283);  // 40s Ken Burns loop
+  var sc=1.06+.06*e+.008*Math.sin(t*1.3),px=-12*Math.sin(t*.157)-mx*14,py=(-6*e)-my*9,rot=.25*Math.sin(t*.4);
+  cam.style.transform='translate('+px.toFixed(2)+'px,'+py.toFixed(2)+'px) scale('+sc.toFixed(4)+') rotate('+rot.toFixed(3)+'deg)';
+  cx.clearRect(0,0,G.W,G.H);cx.globalCompositeOperation='lighter';
+  while(P.length<MAX&&Math.random()<.5)P.push(spawn());
+  for(var i=P.length-1;i>=0;i--){var p=P[i];p.l+=dt;p.w+=.05*dt;p.x+=(p.vx+Math.sin(p.w)*.25)*dt;p.y+=p.vy*dt;
+   if(p.l>p.L){P.splice(i,1);continue;}var a=Math.sin(Math.PI*p.l/p.L),col=p.hue!=null?'hsla('+((p.hue+t*60)%360)+',100%,65%,':'rgba('+p.c+',';
+   var g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.s*4);g.addColorStop(0,col+a+')');g.addColorStop(1,col+'0)');cx.fillStyle=g;cx.fillRect(p.x-p.s*4,p.y-p.s*4,p.s*8,p.s*8);}
+  requestAnimationFrame(frame);}
+ function sync(){var want=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
+  if(want&&!run){run=true;if(!t0)t0=performance.now();last=performance.now();requestAnimationFrame(frame);}
+  else if(!want&&run){run=false;}
+  if(RM.matches)cam.style.transform='none';}
+ document.addEventListener('visibilitychange',sync);RM.addEventListener&&RM.addEventListener('change',sync);
  addEventListener('resize',place);place();
  var b=document.getElementById('toggle'),l=b.querySelector('span');
- b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);});
+ b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);if(!off){setTimeout(function(){if(!document.body.classList.contains('textoff')){P.length=0;cx.clearRect(0,0,G.W,G.H);}},1000);}sync();});
  if(location.hash=='#hidetext')b.click();
 })();
 </script>
