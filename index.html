@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WE ARE SYNDICATE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@property --h { syntax:'<number>'; inherits:true; initial-value:0; }
+:root{ --h:0; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#05040a}
+html,body{height:100%;color:#fff;overflow-x:hidden}
+body{font-family:'Space Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;animation:hue 12s linear infinite}
+@keyframes hue{to{--h:360}}
+
+/* background */
+.bg{position:fixed;inset:-2%;background:url(bg.jpg) center/cover no-repeat;background-image:image-set(url(bg.webp) type("image/webp"),url(bg.jpg) type("image/jpeg"));filter:brightness(.85) saturate(1.1);animation:drift 40s ease-in-out infinite alternate;z-index:0}
+@keyframes drift{to{transform:scale(1.03) translate(-.5%,.5%)}}
+.aurora{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:.55;
+ background:radial-gradient(40% 35% at 0% 0%,hsl(calc(var(--h)*1deg) 100% 60%/.7),transparent 70%),
+ radial-gradient(40% 35% at 100% 0%,hsl(calc(var(--h)*1deg + 90deg) 100% 60%/.7),transparent 70%),
+ radial-gradient(40% 35% at 100% 100%,hsl(calc(var(--h)*1deg + 180deg) 100% 60%/.7),transparent 70%),
+ radial-gradient(40% 35% at 0% 100%,hsl(calc(var(--h)*1deg + 270deg) 100% 60%/.7),transparent 70%)}
+.vignette{position:fixed;inset:0;z-index:2;background:radial-gradient(ellipse 42% 60% at center,rgba(0,0,0,.62) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,0) 100%),radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.45) 100%)}
+
+/* gamer edge */
+.edge{position:fixed;inset:0;pointer-events:none;z-index:5;padding:4px;border-radius:0;
+ background:conic-gradient(from calc(var(--h)*1deg),#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+ filter:drop-shadow(0 0 10px hsl(calc(var(--h)*1deg) 100% 62%)) brightness(1.15);opacity:1}
+
+main{position:relative;z-index:3;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9vh 6vw 6vh;gap:clamp(1.5rem,4vh,2.75rem)}
+h1{font-family:'Syncopate','Monument Extended','Arial Black',sans-serif;font-weight:700;text-transform:uppercase;line-height:1.02;letter-spacing:.04em;font-size:clamp(2.1rem,8.2vw,8rem);position:relative}
+h1 span{display:block;
+ background:linear-gradient(90deg,#ff4d4d,#ff9a3d,#fff23d,#b4ff3d,#3dff7a,#3dfff2,#3dc4ff,#5a7dff,#a64dff,#ff4df0,#ff4da6,#ff4d4d);background-size:400% 100%;
+ -webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s linear infinite;
+ filter:drop-shadow(0 0 18px hsl(calc(var(--h)*1deg) 100% 60%/.75)) drop-shadow(0 0 48px hsl(calc(var(--h)*1deg + 60deg) 100% 55%/.45))}
+h1 span:first-child{font-size:.62em;letter-spacing:.18em}
+@keyframes flow{to{background-position:400% 0}}
+
+.copy{max-width:52rem;font-size:clamp(.82rem,1.15vw + .45rem,1.12rem);line-height:1.85;color:#f2f0f7;text-shadow:0 2px 12px #000}
+.copy p+p{margin-top:.9em}
+.copy .lead{font-weight:700;font-size:1.1em}
+.k{font-weight:700;--o:0;color:hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 63%);text-shadow:0 0 8px hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 60%/.95),0 0 22px hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 60%/.6),0 2px 6px #000}
+.end{font-family:'Syncopate',sans-serif;font-weight:700;letter-spacing:.3em;margin-top:1.2em!important;font-size:1.05em}
+
+.discord{position:relative;display:inline-flex;align-items:center;gap:.6em;padding:.85em 1.8em;border-radius:999px;color:#fff;text-decoration:none;font-weight:700;letter-spacing:.12em;font-size:.85rem;text-transform:uppercase;
+ background:rgba(8,6,16,.75);isolation:isolate;transition:transform .2s;
+ box-shadow:0 0 22px hsl(calc(var(--h)*1deg) 100% 62%/.85),0 0 55px hsl(calc(var(--h)*1deg + 120deg) 100% 62%/.5)}
+.discord::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:3px;z-index:-1;
+ background:conic-gradient(from calc(var(--h)*3deg),#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.discord:hover,.discord:focus-visible{transform:translateY(-2px) scale(1.04);outline:none}
+.discord svg{width:1.4em;height:1.4em;fill:currentColor}
+
+/* torn intro */
+.tear{position:fixed;left:0;right:0;height:56vh;z-index:10;pointer-events:none;animation:1.4s cubic-bezier(.7,0,.2,1) .5s forwards}
+.tear svg{width:100%;height:100%;display:block}
+.tear.top{top:0;animation-name:up}.tear.bot{bottom:0;animation-name:down}
+@keyframes up{to{transform:translateY(-110%) rotate(-2deg)}}
+@keyframes down{to{transform:translateY(110%) rotate(2deg)}}
+main>*{opacity:0;animation:rise 1s ease 1.3s forwards}
+main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.8s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+@media (max-width:600px){h1{font-size:11vw;letter-spacing:.02em}h1 span:first-child{letter-spacing:.12em}.copy{line-height:1.7}.edge{padding:3px}.bg{background-position:center}}
+@media (prefers-reduced-motion:reduce){
+ *,*::before{animation:none!important;transition:none!important}
+ main>*{opacity:1}.tear{display:none}
+ body{--h:280}
+ h1 span{background-position:50% 0}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+<div class="edge" aria-hidden="true"></div>
+
+<div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
+<path fill="#555" d="M0 0H1000V540L960 520 925 548 880 515 840 540 790 510 750 535 700 505 655 545 610 512 560 538 515 508 470 542 420 510 380 535 330 505 290 540 240 512 195 545 150 515 105 538 60 508 25 535 0 515Z"/>
+<path fill="#0b0b0d" d="M0 0H1000V505L955 490 915 515 870 482 830 508 785 478 745 500 695 472 650 510 605 480 560 505 512 474 468 506 420 478 378 500 330 472 288 505 240 478 195 512 148 482 102 505 58 476 22 500 0 485Z"/>
+</svg></div>
+<div class="tear bot" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
+<path fill="#555" d="M0 560H1000V22L962 45 920 15 878 42 835 12 792 40 748 18 702 48 660 20 612 44 568 14 520 46 478 16 430 42 388 12 340 45 296 18 250 48 205 15 160 40 112 12 70 44 30 20 0 40Z"/>
+<path fill="#0b0b0d" d="M0 560H1000V58L958 78 918 50 875 80 832 52 790 76 745 55 700 84 655 56 610 80 565 50 518 82 475 54 428 78 385 50 338 82 292 56 248 84 202 52 158 76 110 50 68 80 28 58 0 76Z"/>
+</svg></div>
+
+<main>
+ <h1><span>We Are</span><span>Syndicate</span></h1>
+ <div class="copy">
+  <p class="lead">This is <b class="k" style="--o:0">SYNDICATE</b>. We are <b class="k" style="--o:33">FAMILY</b>.</p>
+  <p>This is the place where you realize you are <b class="k" style="--o:66">Smarter</b> than you think, <b class="k" style="--o:99">Stronger</b> than you seem, and <b class="k" style="--o:132">Braver</b> than you believe.</p>
+  <p>We are the <b class="k" style="--o:165">Beginning</b> and the <b class="k" style="--o:198">End</b>.</p>
+  <p>Here, beauty, unity, and unstoppable energy shape everything we do.</p>
+  <p>A place to <b class="k" style="--o:231">LOVE</b> and <b class="k" style="--o:264">RESPECT</b> one another.</p>
+  <p>The home where you find your <b class="k" style="--o:297">PURPOSE</b> and your <b class="k" style="--o:330">PEOPLE</b>.</p>
+  <p class="end">WE ARE SYNDICATE</p>
+ </div>
+ <a class="discord" href="https://discord.gg/PmX3W9vZWE" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.7ZM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+  Join the Discord
+ </a>
+</main>
+</body>
+</html>
