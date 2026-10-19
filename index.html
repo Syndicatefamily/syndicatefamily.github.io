@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WE ARE SYNDICATE</title>
-<link rel="preload" as="image" href="bg-hands.webp" type="image/webp">
+<link rel="preload" as="image" href="bg-hands2.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@ body{font-family:'Space Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monos
 /* background */
 .bg{position:fixed;inset:0;background:center/cover no-repeat;filter:brightness(.85) saturate(1.1);z-index:0;transition:opacity .8s ease}
 .bg-crest{background-image:url(bg-crest.jpg);background-image:image-set(url(bg-crest.webp) type("image/webp"),url(bg-crest.jpg) type("image/jpeg"))}
-.bg-hands{background-image:url(bg-hands.jpg);background-image:image-set(url(bg-hands.webp) type("image/webp"),url(bg-hands.jpg) type("image/jpeg"));opacity:0}
+.bg-hands{background-image:url(bg-hands2.jpg);background-image:image-set(url(bg-hands2.webp) type("image/webp"),url(bg-hands2.jpg) type("image/jpeg"));opacity:0}
 body.textoff .bg-hands{opacity:1}body.textoff .bg-crest{opacity:0}
 .aurora{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:.55;
  background:radial-gradient(40% 35% at 0% 0%,hsl(calc(var(--h)*1deg) 100% 60%/.7),transparent 70%),
@@ -135,7 +135,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 <button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="content"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3 3l18 18"/></svg><span>Hide text</span></button>
 <script>
 (function(){
- var IW=1792,IH=1008,PX=913/1792,PY=275/1008,HS=0.08; // gap between palms (measured), heart = 8% of image width (2.5x)
+ var IW=1792,IH=1008,PX=914/1792,PY=275/1008,HS=0.08; // gap between palms (measured), heart = 8% of image width (2.5x)
  var h=document.getElementById('heart');
  function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s,ox=(W-dw)/2,oy=(H-dh)/2,z=Math.max(35,dw*HS);
   h.style.left=(ox+dw*PX)+'px';h.style.top=(oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';}
