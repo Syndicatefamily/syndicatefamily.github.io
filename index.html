@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WE ARE SYNDICATE</title>
-<link rel="preload" as="image" href="bg-hands2.webp" type="image/webp">
+<link rel="preload" as="image" href="syndicate-loop.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@ body{font-family:'Space Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monos
 /* background */
 .bg{position:fixed;inset:0;background:center/cover no-repeat;filter:brightness(.85) saturate(1.1);z-index:0;transition:opacity .8s ease}
 .bg-crest{background-image:url(bg-crest.jpg);background-image:image-set(url(bg-crest.webp) type("image/webp"),url(bg-crest.jpg) type("image/jpeg"))}
-.bg-hands{background-image:url(bg-hands2.jpg);background-image:image-set(url(bg-hands2.webp) type("image/webp"),url(bg-hands2.jpg) type("image/jpeg"));opacity:0}
+.bg-hands{opacity:0}.bg-hands video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s linear}.bg-hands video.b{opacity:0}.bg-hands video.b.on{opacity:1}
 body.textoff .bg-hands{opacity:1}body.textoff .bg-crest{opacity:0}
 .aurora{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:.55;
  background:radial-gradient(40% 35% at 0% 0%,hsl(calc(var(--h)*1deg) 100% 60%/.7),transparent 70%),
@@ -128,7 +128,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 </style>
 </head>
 <body>
-<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-anim-v1"><div class="cam" id="cam"><div class="bg bg-hands"></div><div class="glow g-blue" id="gB"></div><div class="glow g-org" id="gO"></div><canvas id="fx"></canvas><div class="heart" id="heart" aria-hidden="true"><span class="hb"><svg viewBox="0 0 32 29"><path d="M16 28.5 13.7 26.4C5.6 19 .3 14.2.3 8.3.3 3.5 4 0 8.7 0c2.7 0 5.3 1.3 7.3 3.3C18 1.3 20.6 0 23.3 0 28 0 31.7 3.5 31.7 8.3c0 5.9-5.3 10.7-13.4 18.1L16 28.5Z"/></svg></span><i class="ring"></i></div></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-video-v1"><div class="cam" id="cam"><div class="bg bg-hands"><video id="vA" class="a" muted playsinline loop preload="auto" poster="syndicate-loop.jpg"><source src="syndicate-loop.webm" type="video/webm"><source src="syndicate-loop.mp4" type="video/mp4"></video></div><canvas id="fx"></canvas></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
 <div class="leds" id="leds" aria-hidden="true" data-v="led-lotus-v1"></div>
 
 <div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
@@ -160,16 +160,14 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 <button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="content"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3 3l18 18"/></svg><span>Hide text</span></button>
 <script>
 (function(){
- var IW=1792,IH=1008,PX=914/1792,PY=275/1008,HS=0.08; // palms anchor (measured); heart = 8% of image width
+ var IW=1280,IH=720,PX=914/1792,PY=275/1008,HS=0.08; // palms anchor (measured); heart = 8% of image width
  // tail glow anchors measured with PIL (fractions of image): blue tail left, orange tail right
- var TB={x:.085,y:.53,r:.17},TO={x:.915,y:.6,r:.15};
- var h=document.getElementById('heart'),gB=document.getElementById('gB'),gO=document.getElementById('gO'),cam=document.getElementById('cam'),cv=document.getElementById('fx'),cx=cv.getContext('2d');
+ var TB={x:.09,y:.5,r:.14},TO={x:.91,y:.55,r:.13};
+ var cam=document.getElementById('cam'),cv=document.getElementById('fx'),cx=cv.getContext('2d');
  var G={ox:0,oy:0,dw:0,dh:0,W:0,H:0};
  function at(el,f,r){el.style.left=(G.ox+G.dw*f.x)+'px';el.style.top=(G.oy+G.dh*f.y)+'px';el.style.width=el.style.height=(G.dw*r)+'px';}
  function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s;
   G={ox:(W-dw)/2,oy:(H-dh)/2,dw:dw,dh:dh,W:W,H:H};var z=Math.max(35,dw*HS);
-  h.style.left=(G.ox+dw*PX)+'px';h.style.top=(G.oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';
-  at(gB,TB,TB.r*2);at(gO,TO,TO.r*2);
   var d=Math.min(devicePixelRatio||1,2);cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);}
  // scene-anim-v1: camera + particles. The camera transform is on .cam, which contains the image, glows, canvas and heart, so all stay locked together.
  var RM=matchMedia('(prefers-reduced-motion: reduce)'),mx=0,my=0,tx=0,ty=0,P=[],run=false,t0=0,last=0;
@@ -194,7 +192,13 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
    if(p.l>p.L){P.splice(i,1);continue;}var a=Math.sin(Math.PI*p.l/p.L),col=p.hue!=null?'hsla('+((p.hue+t*60)%360)+',100%,65%,':'rgba('+p.c+',';
    var g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.s*4);g.addColorStop(0,col+a+')');g.addColorStop(1,col+'0)');cx.fillStyle=g;cx.fillRect(p.x-p.s*4,p.y-p.s*4,p.s*8,p.s*8);}
   requestAnimationFrame(frame);}
- function sync(){var want=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
+ // scene-video-v1: ping-pong loop video; play only while text is hidden, poster still for reduced motion
+ var vA=document.getElementById('vA');vA.addEventListener('loadedmetadata',function(){if(vA.videoWidth){IW=vA.videoWidth;IH=vA.videoHeight;place();}});
+ // loop insurance: seek back a hair before the end so native loop never shows a gap
+ vA.addEventListener('timeupdate',function(){if(vA.duration&&vA.currentTime>vA.duration-0.06)vA.currentTime=0;});
+ function vsync(){var on=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
+  if(on){var p=vA.play();p&&p.catch&&p.catch(function(){});}else vA.pause();}
+ function sync(){vsync();var want=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
   if(want&&!run){run=true;if(!t0)t0=performance.now();last=performance.now();requestAnimationFrame(frame);}
   else if(!want&&run){run=false;}
   if(RM.matches)cam.style.transform='none';}
