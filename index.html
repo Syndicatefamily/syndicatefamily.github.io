@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WE ARE SYNDICATE</title>
-<link rel="preload" as="image" href="syndicate-loop.jpg">
+<link rel="preload" as="image" href="syndicate-once.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -67,7 +67,8 @@ h1 span:first-child{font-size:.62em;letter-spacing:.18em}
 .discord:hover,.discord:focus-visible{transform:translateY(-2px) scale(1.04);outline:none}
 .discord svg{width:1.4em;height:1.4em;fill:currentColor}
 
-/* kiss heart (scene-kiss-v1) */
+/* kiss heart (scene-once-v1) */
+.veil{position:absolute;inset:0;z-index:30;background:#05030a;opacity:0;pointer-events:none;transition:opacity .5s ease}.veil.on{opacity:1}
 .heart{position:absolute;left:0;top:0;z-index:20;pointer-events:none;width:60px;height:60px;transform:translate(-50%,-50%) scale(0);opacity:0;will-change:transform,opacity}
 .heart svg{width:100%;height:100%;display:block;overflow:visible}
 .heart.on svg{animation:beat 1.1s ease-in-out infinite}
@@ -125,7 +126,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 </style>
 </head>
 <body>
-<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-kiss-v1"><div class="cam" id="cam"><div class="bg bg-hands"><video id="vA" class="a" muted playsinline loop preload="auto" poster="syndicate-loop.jpg"><source src="syndicate-loop.webm" type="video/webm"><source src="syndicate-loop.mp4" type="video/mp4"></video></div><canvas id="fx"></canvas><div class="heart" id="heart"><span class="ring"></span><svg viewBox="0 0 24 24"><path d="M12 21.3l-1.4-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.6 11.5L12 21.3z"/></svg></div></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-once-v1"><div class="cam" id="cam"><div class="bg bg-hands"><video id="vA" class="a" muted playsinline preload="auto" poster="syndicate-once.jpg"><source src="syndicate-once.webm" type="video/webm"><source src="syndicate-once.mp4" type="video/mp4"></video></div><canvas id="fx"></canvas><div class="heart" id="heart"><span class="ring"></span><svg viewBox="0 0 24 24"><path d="M12 21.3l-1.4-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.6 11.5L12 21.3z"/></svg></div></div><div class="veil" id="veil"></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
 <div class="leds" id="leds" aria-hidden="true" data-v="led-lotus-v1"></div>
 
 <div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
@@ -157,7 +158,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 <button class="toggle" id="toggle" type="button" aria-pressed="false" aria-controls="content"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M3 3l18 18"/></svg><span>Hide text</span></button>
 <script>
 (function(){
- var IW=1280,IH=720,PX=645/1280,PY=105/720,HS=0.075; // scene-kiss-v1: heart just above the kiss point (video px ~645,105); heart = 7.5% of video width
+ var IW=1280,IH=720,PX=645/1280,PY=105/720,HS=0.075; // scene-once-v1: heart just above the kiss point (video px ~645,105); heart = 7.5% of video width
  // tail glow anchors measured with PIL (fractions of image): blue tail left, orange tail right
  var TB={x:.09,y:.5,r:.14},TO={x:.91,y:.55,r:.13};
  var cam=document.getElementById('cam'),cv=document.getElementById('fx'),cx=cv.getContext('2d');
@@ -190,14 +191,14 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
    var g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.s*4);g.addColorStop(0,col+a+')');g.addColorStop(1,col+'0)');cx.fillStyle=g;cx.fillRect(p.x-p.s*4,p.y-p.s*4,p.s*8,p.s*8);}
   requestAnimationFrame(frame);}
 
- // scene-kiss-v1: heart shows only while lips touch. Windows measured from frames of the ping-pong loop (24fps):
- // forward kiss frames 102-126 (4.25-5.25s), reverse kiss frames 161-185 (6.71-7.71s). Anchor keyframes in video px (above the lips).
- var KW=[[4.25,5.25],[6.71,7.71]],KA=[[4.25,645,100],[4.6,646,110],[5.25,645,110]],FADE=.35,inK=-1;
- function anchor(t){if(t>6)t=11.96-t;if(t<=KA[0][0])return KA[0];for(var i=1;i<KA.length;i++)if(t<=KA[i][0]){var a=KA[i-1],b=KA[i],f=(t-a[0])/(b[0]-a[0]);return [t,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f];}return KA[KA.length-1];}
+ // scene-once-v1: heart shows only while lips touch, during the single forward kiss (24fps frames 102-126, 4.25-5.25s).
+ // Anchor keyframes in video px (above the lips).
+ var resetting=false,rT=0;var KW=[[4.25,5.25]],KA=[[4.25,645,100],[4.6,646,110],[5.25,645,110]],FADE=.35,inK=-1;
+ function anchor(t){if(t<=KA[0][0])return KA[0];for(var i=1;i<KA.length;i++)if(t<=KA[i][0]){var a=KA[i-1],b=KA[i],f=(t-a[0])/(b[0]-a[0]);return [t,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f];}return KA[KA.length-1];}
  function burst(x,y){for(var i=0;i<40;i++){var a=Math.random()*6.283,v=1+Math.random()*3;P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-.5,s:1.2+Math.random()*2,l:0,L:50+Math.random()*60,w:Math.random()*6.28,hue:Math.random()*360});}}
  function heartAt(t){var k=-1,sc=0;for(var i=0;i<KW.length;i++){var w=KW[i];if(t>=w[0]-.05&&t<=w[1]+FADE){k=i;var u=t-w[0];
     sc=u<0?0:u<.35?(function(q){var c=1.9;q-=1;return 1+(c+1)*q*q*q+c*q*q;})(u/.35):t<=w[1]?1:1-(t-w[1])/FADE;}}
-  var on=document.body.classList.contains('textoff')&&!RM.matches&&k>=0&&sc>0;
+  var on=document.body.classList.contains('textoff')&&!RM.matches&&!resetting&&k>=0&&sc>0;
   if(on){var A=anchor(t),x=G.ox+G.dw*A[1]/IW,y=G.oy+G.dh*A[2]/IH;HT.style.left=x+'px';HT.style.top=y+'px';
    HT.style.transform='translate(-50%,-50%) scale('+Math.max(0,sc).toFixed(3)+')';HT.style.opacity=Math.min(1,sc*1.5).toFixed(3);
    if(inK!==k&&t<KW[k][0]+.4){HT.classList.remove('burst');void HT.offsetWidth;HT.classList.add('burst');burst(x,y);}
@@ -207,12 +208,19 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
  if('requestVideoFrameCallback' in HTMLVideoElement.prototype){vA.requestVideoFrameCallback(function cb(n,m){heartAt(m&&m.mediaTime!=null?m.mediaTime:vA.currentTime);vA.requestVideoFrameCallback(cb);});(function tick(){if(vA.paused)heartAt(vA.currentTime);requestAnimationFrame(tick);})();}
  else{(function tick(){heartAt(vA.currentTime);requestAnimationFrame(tick);})();}
  vA.addEventListener('pause',function(){heartAt(vA.currentTime);});
- // ping-pong loop video; play only while text is hidden, poster still for reduced motion
+ // forward-once video; play only while text is hidden, poster still for reduced motion
 vA.addEventListener('loadedmetadata',function(){if(vA.videoWidth){IW=vA.videoWidth;IH=vA.videoHeight;place();}});
- // loop insurance: seek back a hair before the end so native loop never shows a gap
- vA.addEventListener('timeupdate',function(){if(vA.duration&&vA.currentTime>vA.duration-0.06)vA.currentTime=0;});
- function vsync(){var on=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
-  if(on){var p=vA.play();p&&p.catch&&p.catch(function(){});}else vA.pause();}
+ // scene-once-v1: play forward once, then fade a veil in, seek to 0 under it, fade out and play again
+ var veil=document.getElementById('veil');
+ function clearHeart(){inK=-1;HT.style.opacity=0;HT.style.transform='translate(-50%,-50%) scale(0)';HT.classList.remove('on','burst');}
+ function startReset(){if(resetting)return;resetting=true;clearHeart();veil.classList.add('on');
+  rT=setTimeout(function(){vA.pause();var done=function(){vA.removeEventListener('seeked',done);clearHeart();resetting=false;veil.classList.remove('on');vsync();};
+   vA.addEventListener('seeked',done);vA.currentTime=0;},520);}
+ function cancelReset(){clearTimeout(rT);resetting=false;veil.classList.remove('on');}
+ vA.addEventListener('timeupdate',function(){if(vA.duration&&vA.currentTime>vA.duration-0.7&&document.body.classList.contains('textoff'))startReset();});
+ vA.addEventListener('ended',startReset);
+function vsync(){if(resetting&&!vA.paused)return;var on=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
+  if(on&&!resetting){var p=vA.play();p&&p.catch&&p.catch(function(){});}else vA.pause();}
  function sync(){vsync();var want=document.body.classList.contains('textoff')&&!document.hidden&&!RM.matches;
   if(want&&!run){run=true;if(!t0)t0=performance.now();last=performance.now();requestAnimationFrame(frame);}
   else if(!want&&run){run=false;}
@@ -220,7 +228,7 @@ vA.addEventListener('loadedmetadata',function(){if(vA.videoWidth){IW=vA.videoWid
  document.addEventListener('visibilitychange',sync);RM.addEventListener&&RM.addEventListener('change',sync);
  addEventListener('resize',place);place();
  var b=document.getElementById('toggle'),l=b.querySelector('span');
- b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);if(!off){setTimeout(function(){if(!document.body.classList.contains('textoff')){P.length=0;cx.clearRect(0,0,G.W,G.H);}},1000);}sync();});
+ b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');cancelReset();clearHeart();if(off){try{vA.currentTime=0;}catch(e){}}b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);if(!off){setTimeout(function(){if(!document.body.classList.contains('textoff')){P.length=0;cx.clearRect(0,0,G.W,G.H);}},1000);}sync();});
  if(location.hash=='#hidetext')b.click();
 })();
 </script>
