@@ -29,11 +29,14 @@ body.textoff .bg-hands{opacity:1}body.textoff .bg-crest{opacity:0}
  radial-gradient(40% 35% at 0% 100%,hsl(calc(var(--h)*1deg + 270deg) 100% 60%/.7),transparent 70%)}
 .vignette{position:fixed;inset:0;z-index:2;background:radial-gradient(ellipse 42% 60% at center,rgba(0,0,0,.62) 0%,rgba(0,0,0,.42) 55%,rgba(0,0,0,0) 100%),radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.45) 100%)}
 
-/* led bulb border */
-.leds{position:fixed;inset:0;pointer-events:none;z-index:25}
-.bulb{position:absolute;width:var(--bs,12px);height:var(--bs,12px);margin:calc(var(--bs,12px)/-2) 0 0 calc(var(--bs,12px)/-2);border-radius:50%;background:#ff2a2a;color:#ff2a2a;
- box-shadow:0 0 4px 1px currentColor,0 0 12px 2px currentColor,inset 0 0 2px rgba(255,255,255,.9);animation:bulb 3.3s linear infinite}
-@keyframes bulb{0%{background:#ff2a2a;color:#ff2a2a}9%{background:#ff8a1f;color:#ff8a1f}18%{background:#ffe81f;color:#ffe81f}27%{background:#9dff1f;color:#9dff1f}36%{background:#1fff5a;color:#1fff5a}45%{background:#1ffff0;color:#1ffff0}54%{background:#1fb4ff;color:#1fb4ff}63%{background:#2a5bff;color:#2a5bff}72%{background:#8a2aff;color:#8a2aff}81%{background:#ff1fe8;color:#ff1fe8}90%{background:#ff1f8a;color:#ff1f8a}100%{background:#ff2a2a;color:#ff2a2a}}
+/* led strip border (led-strip-v1) */
+@property --la { syntax:'<angle>'; inherits:true; initial-value:0deg; }
+.leds{position:fixed;inset:0;pointer-events:none;z-index:25;--t:6px;animation:lspin 4s linear infinite}
+.leds::before,.leds::after{content:"";position:absolute;inset:0;padding:var(--t);background:conic-gradient(from var(--la),#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.leds::after{padding:calc(var(--t)*4);inset:calc(var(--t)*-1.5);filter:blur(14px) saturate(1.4);opacity:.95}
+@keyframes lspin{to{--la:360deg}}
+@media (max-width:600px){.leds{--t:4px}.leds::after{filter:blur(10px) saturate(1.4)}}
 
 main{position:relative;z-index:3;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9vh 6vw 6vh;gap:clamp(1.5rem,4vh,2.75rem)}
 h1{font-family:'Syncopate','Monument Extended','Arial Black',sans-serif;font-weight:700;text-transform:uppercase;line-height:1.02;letter-spacing:.04em;font-size:clamp(2.1rem,8.2vw,8rem);position:relative}
@@ -98,13 +101,13 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
  body{--h:280}
  h1 span{background-position:50% 0}
  .heart path{fill:#ff1fe8;color:#ff1fe8}
- .bulb{background:hsl(calc(var(--i)*32.7deg) 100% 58%);color:hsl(calc(var(--i)*32.7deg) 100% 58%)}
+ .leds{animation:none;--la:0deg}
 }
 </style>
 </head>
 <body>
 <div class="bg bg-crest" aria-hidden="true"></div><div class="bg bg-hands" aria-hidden="true"></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
-<div class="leds" id="leds" aria-hidden="true" data-v="led-bulbs-v1"></div>
+<div class="leds" id="leds" aria-hidden="true" data-v="led-strip-v1"></div>
 
 <div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
 <path fill="#555" d="M0 0H1000V540L960 520 925 548 880 515 840 540 790 510 750 535 700 505 655 545 610 512 560 538 515 508 470 542 420 510 380 535 330 505 290 540 240 512 195 545 150 515 105 538 60 508 25 535 0 515Z"/>
@@ -140,16 +143,6 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
  function place(){var W=innerWidth,H=document.documentElement.clientHeight||innerHeight,s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s,ox=(W-dw)/2,oy=(H-dh)/2,z=Math.max(35,dw*HS);
   h.style.left=(ox+dw*PX)+'px';h.style.top=(oy+dh*PY)+'px';h.style.width=h.style.height=z+'px';}
  addEventListener('resize',place);place();
- var L=document.getElementById('leds'),rt;
- function leds(){var W=innerWidth,H=innerHeight,m=W<600,bs=m?8:12,gap=m?22:32,in_=m?9:12;
-  var w=W-2*in_,hh=H-2*in_,per=2*(w+hh),n=Math.max(8,Math.round(per/gap)),st=per/n,f=document.createDocumentFragment();
-  L.style.setProperty('--bs',bs+'px');
-  for(var i=0;i<n;i++){var d=i*st,x,y;
-   if(d<w){x=d;y=0}else if(d<w+hh){x=w;y=d-w}else if(d<2*w+hh){x=w-(d-w-hh);y=hh}else{x=0;y=hh-(d-2*w-hh)}
-   var e=document.createElement('i');e.className='bulb';e.style.left='calc('+in_+'px + (100% - '+2*in_+'px) * '+(x/w).toFixed(5)+')';e.style.top='calc('+in_+'px + (100% - '+2*in_+'px) * '+(y/hh).toFixed(5)+')';
-   e.style.setProperty('--i',i%11);e.style.animationDelay=(-3.3*((i%22)/22))+'s';f.appendChild(e);}
-  L.textContent='';L.appendChild(f);}
- addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(leds,120)});leds();
  var b=document.getElementById('toggle'),l=b.querySelector('span');
  b.addEventListener('click',function(){var off=document.body.classList.toggle('textoff');b.setAttribute('aria-pressed',off);l.textContent=off?'Show text':'Hide text';document.getElementById('content').setAttribute('aria-hidden',off);});
  if(location.hash=='#hidetext')b.click();
