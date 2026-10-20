@@ -55,7 +55,9 @@ h1 span:first-child{font-size:.62em;letter-spacing:.18em}
 .copy{max-width:52rem;font-size:clamp(.82rem,1.15vw + .45rem,1.12rem);line-height:1.85;color:#f2f0f7;text-shadow:0 2px 12px #000}
 .copy p+p{margin-top:.9em}
 .copy .lead{font-weight:700;font-size:1.1em}
-.k{font-weight:700;--o:0;color:hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 63%);text-shadow:0 0 8px hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 60%/.95),0 0 22px hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 60%/.6),0 2px 6px #000}
+.k,.end{font-weight:700;--o:0;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(90deg,#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a,#ff8a1f,#ffe81f,#9dff1f,#1fff5a,#1ffff0,#1fb4ff,#2a5bff,#8a2aff,#ff1fe8,#ff1f8a,#ff2a2a);background-size:400% 100%;-webkit-background-clip:text;background-clip:text;animation:rgbflow 6s linear infinite;animation-delay:calc(var(--o) * -0.0167s);filter:drop-shadow(0 0 6px hsl(calc(var(--h)*1deg + var(--o)*1deg) 100% 60%/.9)) drop-shadow(0 2px 4px #000)}
+@keyframes rgbflow{from{background-position:0% 50%}to{background-position:100% 50%}}
+@media (prefers-reduced-motion:reduce){.k,.end{animation:none}}
 .end{font-family:'Syncopate',sans-serif;font-weight:700;letter-spacing:.3em;margin-top:1.2em!important;font-size:1.05em}
 
 .discord{position:relative;display:inline-flex;align-items:center;gap:.6em;padding:.85em 1.8em;border-radius:999px;color:#fff;text-decoration:none;font-weight:700;letter-spacing:.12em;font-size:.85rem;text-transform:uppercase;
@@ -126,7 +128,7 @@ main>*:nth-child(2){animation-delay:1.55s}main>*:nth-child(3){animation-delay:1.
 </style>
 </head>
 <body>
-<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-once-v1"><div class="cam" id="cam"><div class="bg bg-hands"><video id="vA" class="a" muted playsinline preload="auto" poster="syndicate-once.jpg"><source src="syndicate-once.webm" type="video/webm"><source src="syndicate-once.mp4" type="video/mp4"></video></div><canvas id="fx"></canvas><div class="heart" id="heart"><span class="ring"></span><svg viewBox="0 0 24 24"><path d="M12 21.3l-1.4-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.6 11.5L12 21.3z"/></svg></div></div><div class="veil" id="veil"></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+<div class="bg bg-crest" aria-hidden="true"></div><div class="scene" id="scene" aria-hidden="true" data-v="scene-once-v1" data-k="kw-rgb-v1"><div class="cam" id="cam"><div class="bg bg-hands"><video id="vA" class="a" muted playsinline preload="auto" poster="syndicate-once.jpg"><source src="syndicate-once.webm" type="video/webm"><source src="syndicate-once.mp4" type="video/mp4"></video></div><canvas id="fx"></canvas><div class="heart" id="heart"><span class="ring"></span><svg viewBox="0 0 24 24"><path d="M12 21.3l-1.4-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.6 11.5L12 21.3z"/></svg></div></div><div class="veil" id="veil"></div></div><div class="aurora" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
 <div class="leds" id="leds" aria-hidden="true" data-v="led-lotus-v1"></div>
 
 <div class="tear top" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="none">
