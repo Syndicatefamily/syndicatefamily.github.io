@@ -18,9 +18,9 @@ body{font-family:'Space Mono','JetBrains Mono',ui-monospace,Menlo,Consolas,monos
 @keyframes hue{to{--h:360}}
 
 /* background */
-.bg{position:fixed;inset:0;background:center 14%/cover no-repeat;filter:brightness(1.08) contrast(1.04) saturate(1.12);z-index:0;transition:opacity .8s ease}
+.bg{position:fixed;inset:0;background:center top/cover no-repeat;filter:brightness(1.08) contrast(1.04) saturate(1.12);z-index:0;transition:opacity .8s ease}
 .bg-crest{background-image:url(hero-shown.jpg);background-image:image-set(url(hero-shown.webp) type("image/webp"),url(hero-shown.jpg) type("image/jpeg"))}
-.bg-hands{opacity:0;background-image:url(hero-hidden.jpg);background-image:image-set(url(hero-hidden.webp) type("image/webp"),url(hero-hidden.jpg) type("image/jpeg"));background-position:center 14%;background-size:cover;background-repeat:no-repeat}.bg-hands video{display:none}
+.bg-hands{opacity:0;background-image:url(hero-hidden.jpg);background-image:image-set(url(hero-hidden.webp) type("image/webp"),url(hero-hidden.jpg) type("image/jpeg"));background-position:center top;background-size:cover;background-repeat:no-repeat}.bg-hands video{display:none}
 /* bright-v1 */.scene .bg-hands{filter:brightness(1.13) contrast(1.03) saturate(1.08)}
 body.textoff .bg-hands{opacity:1}body.textoff .bg-crest{opacity:0}
 .aurora{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:.7;
